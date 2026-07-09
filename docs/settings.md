@@ -26,7 +26,7 @@ Native project settings are intentionally scoped to the process working director
 
 ## Config file formats
 
-The global `config.yml` is always YAML. The generic config loader used for other files (for example `models.yml`) accepts `.yml`, `.yaml`, `.json`, and `.jsonc`:
+The global settings file uses `config.yml` by default. If you rename it to `config.yaml`, OMP will use that file instead (`.yaml` takes precedence when both exist). The generic config loader used for other files (for example `models.yml`) accepts `.yml`, `.yaml`, `.json`, and `.jsonc`:
 
 - When a `.yml`/`.yaml` path is requested and only a sibling `.json` exists, it is migrated to YAML automatically (idempotent, once per process).
 - `.json` and `.jsonc` configs are read as-is, with no migration.

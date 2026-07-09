@@ -72,7 +72,8 @@ interface ConfigSnapshot {
 }
 
 async function readConfigYaml(agentDir: string): Promise<ConfigSnapshot> {
-	const configPath = path.join(agentDir, "config.yml");
+	const yamlPath = path.join(agentDir, "config.yaml");
+	const configPath = (await Bun.file(yamlPath).exists()) ? yamlPath : path.join(agentDir, "config.yml");
 	try {
 		const raw = await Bun.file(configPath).text();
 		const parsed = YAML.parse(raw);

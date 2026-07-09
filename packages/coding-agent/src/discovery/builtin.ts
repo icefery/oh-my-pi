@@ -24,6 +24,7 @@ import { type SystemPrompt, systemPromptCapability } from "../capability/system-
 import { type CustomTool, toolCapability } from "../capability/tool";
 import type { LoadContext, LoadResult } from "../capability/types";
 import { expandTilde } from "../tools/path-utils";
+import { resolveConfigPath } from "../config/resolve-config-path";
 import {
 	buildRuleFromMarkdown,
 	createSourceMeta,
@@ -866,7 +867,7 @@ async function loadSettings(ctx: LoadContext): Promise<LoadResult<Settings>> {
 			}
 		}
 
-		const configPath = path.join(dir, "config.yml");
+		const configPath = await resolveConfigPath(dir);
 		const configContent = await readFile(configPath);
 		if (!configContent) continue;
 

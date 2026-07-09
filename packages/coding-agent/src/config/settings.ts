@@ -34,6 +34,7 @@ import { AgentStorage } from "../session/agent-storage";
 import { normalizeToolName } from "../tools/builtin-names";
 import { type EditMode, normalizeEditMode } from "../utils/edit-mode";
 import { withFileLock } from "./file-lock";
+import { resolveConfigPathSync } from "./resolve-config-path";
 import {
 	type BashInterceptorRule,
 	type GroupPrefix,
@@ -264,7 +265,7 @@ export class Settings {
 	private constructor(options: SettingsOptions = {}) {
 		this.#cwd = path.normalize(options.cwd ?? getProjectDir());
 		this.#agentDir = path.normalize(options.agentDir ?? getAgentDir());
-		this.#configPath = options.inMemory ? null : path.join(this.#agentDir, "config.yml");
+		this.#configPath = options.inMemory ? null : resolveConfigPathSync(this.#agentDir);
 		this.#configFiles = options.configFiles?.map(file => path.resolve(this.#cwd, expandTilde(file))) ?? [];
 		this.#persist = !options.inMemory && options.readOnly !== true;
 
